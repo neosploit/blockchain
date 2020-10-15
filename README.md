@@ -5,6 +5,11 @@ A mainly educational blockchain project in C
 - Ulfius HTTP Framework (https://github.com/babelouest/ulfius)
 - Jansson library for encoding, decoding and manipulating JSON data (https://github.com/akheron/jansson)
 
+# Specific Dependencies
+- **GUI Wallet**: X11, OpenGL and GLUT libraries installed
+- **OpenMP miner**: OpenMP Library installed
+- **Cuda miner**: Cuda-Capable Nvidia Graphics Card and Nvidia Toolkit installed
+
 # Features
 - DNS Server for initial node connection and node retrieval (make dns_server)
 - Basic Client with all blockchain capabilites (make client)

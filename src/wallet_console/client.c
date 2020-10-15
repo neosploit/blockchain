@@ -1,10 +1,15 @@
 #include <sys/stat.h>
 #include <ulfius.h>
-#include "client.h"
-#include "endpoints.h"
-#include "../../include/argparse.h"
-#include "../../include/auxilary.h"
-#include "../../include/json.h"
+#include <pthread.h>
+#include "../wallet_console/client.h"
+#include "../wallet_console/endpoints.h"
+#include "../wallet_console/transaction_console.h"
+#include "../wallet_console/wallet_console.h"
+#include "transaction.h"
+#include "wallet.h"
+#include "../argparse.h"
+#include "../auxilary.h"
+#include "../json.h"
 
 int retrieve_args(int argc, const char **argv, client_settings_t *client);
 int confirm_settings(const client_settings_t *client);
@@ -14,6 +19,7 @@ int discover_nodes(const client_settings_t *client);
 int check_previously_known_nodes(const client_settings_t *client);
 int retrieve_known_nodes_connections(const client_settings_t *client);
 int contact_dns_server(const client_settings_t *client);
+void * thread_function(void *arg);
 
 int main(int argc, const char **argv) {
     const char *executable_name = argv[0];
@@ -79,6 +85,19 @@ int main(int argc, const char **argv) {
     // Start Ulfius framework
     if ((res = ulfius_start_framework(&instance)) != U_OK) {
         fprintf(stderr, "\n[ERROR] main/ulfius_start_framework: %d\n", res);
+        return EXIT_FAILURE;
+    }
+
+	// Wallet Creation / Recovery
+    if (setup_wallet(client) == 1){
+        fprintf(stderr, "\n[ERROR] setup_wallet\n");
+        return EXIT_FAILURE;
+    }
+
+    // Thread Creation
+    pthread_t thread;
+    if(pthread_create(&thread, NULL, thread_function, (void*)&client)){
+        fprintf(stderr, "\n[ERROR] Thread Creation Failed!\n");
         return EXIT_FAILURE;
     }
 
@@ -340,7 +359,7 @@ int retrieve_known_nodes_connections(const client_settings_t *client) {
         ulfius_clean_request(&request);
         ulfius_clean_response(&response);
     }
-
+    
     return 0;
 }
 
@@ -358,7 +377,7 @@ int contact_dns_server(const client_settings_t *client) {
         fprintf(stderr, "\n[ERROR] contact_dns_server/send_http_request (%s): %d\n", request.http_url, res);
         return -1;
     }
-
+    
     // If the response is valid, retrieve the JSON node array from response's body
     if (res == U_OK && response.status == 200) {
         if (!(json_response_nodes = ulfius_get_json_body_response(&response, &json_error))) {
@@ -378,10 +397,49 @@ int contact_dns_server(const client_settings_t *client) {
             return -1;
         }
     }
-
+    
     // Cleanup
     ulfius_clean_request(&request);
     ulfius_clean_response(&response);
 
     return 0;
+}
+
+void *thread_function(void *arg){
+    client_settings_t client = *(client_settings_t*) arg;
+
+    int choice;
+    transaction_t *transaction;
+	
+    while(1){
+        printf("\nOPTIONS\n");
+        printf("1. Print Wallet Info\n");
+        printf("2: Add new Wallet\n");
+        printf("3. Make Transaction\n");
+        printf("4. Calculate Wallet Balances\n");
+        printf("0: Exit\n");
+
+        printf("Choice: ");
+        scanf("%d", &choice);
+        
+        switch(choice){
+            case 1:
+                print_wallet_info(client);
+                break;
+            case 2:
+                add_wallet(client);
+                break;
+            case 3:
+                transaction = prepare_transaction(client);
+                if(send_transaction(&client, transaction)){
+                    printf("Transaction was Cancelled! (Amount <= 0 or Balance Insufficient)\n");
+                }
+                break;
+            case 4:
+                print_wallet_balances(&client);
+                break;
+            case 0:
+                pthread_exit(NULL);
+        }
+    }
 }

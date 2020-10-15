@@ -1,9 +1,9 @@
 #include <arpa/inet.h>
 #include <ulfius.h>
-#include "client.h"
-#include "callbacks.h"
-#include "../../include/auxilary.h"
-#include "../../include/json.h"
+#include "../client/client.h"
+#include "../client/callbacks.h"
+#include "../auxilary.h"
+#include "../json.h"
 
 // Connection
 

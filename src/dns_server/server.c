@@ -1,10 +1,10 @@
 #include <sys/stat.h>
 #include <ulfius.h>
-#include "argparse.h"
 #include "server.h"
-#include "auxilary.h"
-#include "json.h"
 #include "endpoints.h"
+#include "../argparse.h"
+#include "../auxilary.h"
+#include "../json.h"
 
 int retrieve_args(int argc, const char **argv, server_settings_t *server);
 int confirm_settings(const server_settings_t *server);
@@ -206,7 +206,7 @@ int update_nodes(const server_settings_t *server) {
     json_array_foreach(json_loaded_nodes, json_loaded_nodes_index, json_loaded_node) {
         node_t node = json_destruct_node(json_loaded_node);
 
-        res = send_http_request(server, &request, &response, node.ip_address, node.port, ENDPOINT_CONNECTION_CHECK_HTTP_METHOD, ENDPOINT_CONNECTION_CHECK_URL_PATH, NULL);
+        res = send_http_request(&request, &response, node.ip_address, node.port, ENDPOINT_CONNECTION_CHECK_HTTP_METHOD, ENDPOINT_CONNECTION_CHECK_URL_PATH, NULL, server->request_timeout);
 
         // If 'ulfius_send_http_request' function call fail with U_ERROR_LIBCURL, most probably the host was down. That's not an error.
         if (res != U_OK && res != U_ERROR_LIBCURL) {
@@ -223,7 +223,7 @@ int update_nodes(const server_settings_t *server) {
     }
 
     // Finally, update nodes via server's own local endpoint
-    res = send_http_request(server, &request, &response, SERVER_DEFAULT_IP_ADDRESS, server->port, ENDPOINT_NODE_REMOVE_HTTP_METHOD, ENDPOINT_NODE_REMOVE_URL_PATH, json_offline_nodes);
+    res = send_http_request(&request, &response, SERVER_DEFAULT_IP_ADDRESS, server->port, ENDPOINT_NODE_REMOVE_HTTP_METHOD, ENDPOINT_NODE_REMOVE_URL_PATH, json_offline_nodes, server->request_timeout);
 
     if (res != U_OK) {
         fprintf(stderr, "\n[ERROR] update_nodes/send_http_request (%s): %d\n", request.http_url, res);

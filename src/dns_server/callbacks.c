@@ -1,8 +1,8 @@
 #include <arpa/inet.h>
 #include <ulfius.h>
-#include "server.h"
-#include "json.h"
 #include "callbacks.h"
+#include "server.h"
+#include "../json.h"
 
 // Connection
 

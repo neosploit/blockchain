@@ -1,10 +1,19 @@
 #include <sys/stat.h>
 #include <ulfius.h>
+#include <pthread.h>
 #include "client.h"
 #include "endpoints.h"
-#include "../../include/argparse.h"
-#include "../../include/auxilary.h"
-#include "../../include/json.h"
+#include "../argparse.h"
+#include "../auxilary.h"
+#include "../json.h"
+#include "../hashing.h"
+#include "../wallet/wallet.h"
+#include "../wallet/transaction.h"
+#include "wallet_gui.h"
+
+/* Connection Status */
+extern int connected;
+extern int nodes_connected;
 
 int retrieve_args(int argc, const char **argv, client_settings_t *client);
 int confirm_settings(const client_settings_t *client);
@@ -14,6 +23,7 @@ int discover_nodes(const client_settings_t *client);
 int check_previously_known_nodes(const client_settings_t *client);
 int retrieve_known_nodes_connections(const client_settings_t *client);
 int contact_dns_server(const client_settings_t *client);
+void *discover_nodes_thread(void *arg);
 
 int main(int argc, const char **argv) {
     const char *executable_name = argv[0];
@@ -82,16 +92,15 @@ int main(int argc, const char **argv) {
         return EXIT_FAILURE;
     }
 
-    // Main loop
-    while (1) {
-        // Discover network nodes if needed
-        if (discover_nodes(&client) == -1) {
-            fprintf(stderr, "\n[ERROR] main/discover_nodes\n");
-            return EXIT_FAILURE;
-        }
-
-        sleep(client.update_interval);
+    // Thread Creation
+    pthread_t thread;
+    if(pthread_create(&thread, NULL, discover_nodes_thread, (void*)&client)){
+        fprintf(stderr, "\n[ERROR] Thread Creation Failed!\n");
+        return EXIT_FAILURE;
     }
+
+    // GUI
+    start_gui(&client);
 
     // Stop framework and clean Ulfius instance
     ulfius_stop_framework(&instance);
@@ -340,7 +349,7 @@ int retrieve_known_nodes_connections(const client_settings_t *client) {
         ulfius_clean_request(&request);
         ulfius_clean_response(&response);
     }
-
+    
     return 0;
 }
 
@@ -358,7 +367,7 @@ int contact_dns_server(const client_settings_t *client) {
         fprintf(stderr, "\n[ERROR] contact_dns_server/send_http_request (%s): %d\n", request.http_url, res);
         return -1;
     }
-
+    
     // If the response is valid, retrieve the JSON node array from response's body
     if (res == U_OK && response.status == 200) {
         if (!(json_response_nodes = ulfius_get_json_body_response(&response, &json_error))) {
@@ -378,10 +387,34 @@ int contact_dns_server(const client_settings_t *client) {
             return -1;
         }
     }
-
+    
     // Cleanup
     ulfius_clean_request(&request);
     ulfius_clean_response(&response);
 
     return 0;
+}
+
+void *discover_nodes_thread(void *arg){
+    client_settings_t *client;
+    client = (client_settings_t *) arg;
+
+    // update gui status
+    nodes_connected = client->known_nodes;
+    connected = (nodes_connected > 0) ? 1 : 0;
+
+    // Main loop
+    while (1) {
+        // Discover network nodes if needed
+        if (discover_nodes(client) == -1) {
+            fprintf(stderr, "\n[ERROR] main/discover_nodes\n");
+            pthread_exit(NULL);
+        }
+
+        // update gui status
+        nodes_connected = client->known_nodes;
+        connected = (nodes_connected > 0) ? 1 : 0;
+
+        sleep(client->update_interval);
+    }
 }

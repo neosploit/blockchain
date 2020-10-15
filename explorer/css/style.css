@@ -1,0 +1,95 @@
+html{
+    position: relative;
+}
+
+body{
+    font-family: 'Roboto Slab', serif;
+    color: #212529;
+    background-color: #fff;
+    font-size: 14px;
+}
+
+header{
+    padding: 20px;
+    background-color: #283848;
+    color: #fff;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+.logo a{
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.navbar-nav{
+    margin-right: 20px;
+}
+
+.navbar-nav li a{
+    color: #fff;
+    font-size: 20px;
+}
+
+.form-inline{
+    flex-wrap: nowrap;
+}
+
+.form-inline input{
+    margin-right: 20px;
+    min-width: 480px;
+}
+
+.search-btn{
+    color: #fff;
+    background-color: #0c6cf2;
+}
+
+.search-btn:hover{
+    color: #fff;
+    background-color: #0d3578;
+}
+
+h1{
+    margin: 30px 0;
+    font-size: 32px;
+}
+
+.searched-text{
+    text-align: center;
+    font-style: italic;
+}
+
+h2{
+    margin: 30px 0;
+    font-size: 30px;
+}
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table th, table td{
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 15px;
+}
+
+.blockchain-section{
+    margin-bottom: 180px;
+}
+
+footer{
+    background-color: #283848;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer .copyright{
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}

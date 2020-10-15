@@ -19,6 +19,7 @@ A mainly educational blockchain project in C
 - Basic Single-Core/Threaded miner (make miner)
 - Multi-Threaded OpenMP miner (make omp_miner)
 - CUDA-accelerated miner (make cuda_miner)
+- Web-Site Explorer (explorer folder)
 
 # Screenshots
 ![alt text](https://i.ibb.co/B2WnmwC/118805540-642610140021463-2051768474811686891-n.png)

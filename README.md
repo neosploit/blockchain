@@ -22,5 +22,5 @@ A mainly educational blockchain project in C
 
 # Screenshots
 ![alt text](https://i.ibb.co/B2WnmwC/118805540-642610140021463-2051768474811686891-n.png)
-![alt text](https://i.ibb.co/0FKMd0d/120554367-3407797569336584-6852632357135082824-n.png)
-![alt text](https://i.ibb.co/S5qhBpc/120575897-348862949505949-1875888404735949257-n.png)
+![alt text](https://i.ibb.co/C5rXtHp/120554367-3407797569336584-6852632357135082824-n.png)
+![alt text](https://i.ibb.co/VQtJR2H/120575897-348862949505949-1875888404735949257-n.png)

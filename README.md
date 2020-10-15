@@ -6,12 +6,12 @@ A mainly educational blockchain project in C
 - Jansson library for encoding, decoding and manipulating JSON data (https://github.com/akheron/jansson)
 - Ubuntu or WSL Environment
 
-# Feature-Specific Dependencies
+# System-Specific Dependencies
 - **GUI Wallet**: X11, OpenGL and GLUT libraries installed
 - **OpenMP miner**: OpenMP Library installed
 - **Cuda miner**: Cuda-Capable Nvidia Graphics Card and Nvidia Toolkit installed
 
-# Features
+# Systems
 - DNS Server for initial node connection and node retrieval (make dns_server)
 - Basic Client with all blockchain capabilites (make client)
 - Console Wallet that extends the client with wallet creation/recovery using Seed Phrase from wordlist (https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt),   transaction and balance calculation features (make wallet)

@@ -4,8 +4,9 @@ A mainly educational blockchain project in C
 # Main Dependencies
 - Ulfius HTTP Framework (https://github.com/babelouest/ulfius)
 - Jansson library for encoding, decoding and manipulating JSON data (https://github.com/akheron/jansson)
+- Ubuntu or WSL Environment
 
-# Specific Dependencies
+# Feature-Specific Dependencies
 - **GUI Wallet**: X11, OpenGL and GLUT libraries installed
 - **OpenMP miner**: OpenMP Library installed
 - **Cuda miner**: Cuda-Capable Nvidia Graphics Card and Nvidia Toolkit installed

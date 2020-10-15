@@ -9,7 +9,7 @@
 #define THREAD_COUNT 8
 #define RANGE_PARTS 256
 
-void parallel_calculate_block_hash(block_t block, int **transaction_hashes, unsigned int nonce_low, unsigned int nonce_high, unsigned int *nonce_solution, char *hash_solution){
+void parallel_calculate_block_hash(block_t block, int **transaction_hashes, unsigned int nonce_low, unsigned int nonce_high, unsigned int *nonce_solution, char **hash_solution){
     unsigned int nonce;
     char *hash;
 
@@ -25,7 +25,7 @@ void parallel_calculate_block_hash(block_t block, int **transaction_hashes, unsi
         if(hash_ok(hash, DIFFICULTY)){
             #pragma omp critical
             {
-                strncpy(hash_solution, hash, HASH_LENGTH + 1);
+                strncpy(hash_solution[0], hash, HASH_LENGTH + 1);
                 *nonce_solution = nonce;
             }
         }
@@ -67,7 +67,7 @@ int brute_force_solve_block(block_t *block){
     for(i = 0; i < RANGE_PARTS; i++){
         // calculate hash for nonces range
         parallel_calculate_block_hash(*block, transaction_hashes, i*(UINT_MAX/RANGE_PARTS), (i+1)*(UINT_MAX/RANGE_PARTS),
-            &nonce_solution, hash_solution);
+            &nonce_solution, &hash_solution);
         
         // print info
         time(&end);

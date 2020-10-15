@@ -22,6 +22,24 @@ A mainly educational blockchain project in C
 - Web-Site Explorer (explorer folder)
 
 # Screenshots
-![alt text](https://i.ibb.co/B2WnmwC/118805540-642610140021463-2051768474811686891-n.png)
-![alt text](https://i.ibb.co/C5rXtHp/120554367-3407797569336584-6852632357135082824-n.png)
-![alt text](https://i.ibb.co/VQtJR2H/120575897-348862949505949-1875888404735949257-n.png)
+
+## DNS Server
+![alt text](https://i.ibb.co/GQYzpcZ/dns-server.png)
+
+## Client
+![alt text](https://i.ibb.co/86mprwJ/client.png)
+
+## Miner
+![alt text](https://i.ibb.co/MRnB8Bk/miner.png)
+
+## OpenMP Miner
+![alt text](https://i.ibb.co/4JppYrR/omp-miner.png)
+
+## Cuda Miner
+![alt text](https://i.ibb.co/BstZNqy/cuda-miner.png)
+
+## Console Wallet
+![alt text](https://i.ibb.co/ZzX5JXp/wallet.gif)
+
+## GUI Wallet
+![alt text](https://i.ibb.co/0jH8NKF/wallet-gui.gif)

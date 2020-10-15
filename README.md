@@ -9,7 +9,7 @@ A mainly educational blockchain project in C
 # System-Specific Dependencies
 - **GUI Wallet**: X11, OpenGL and GLUT libraries installed
 - **OpenMP miner**: OpenMP Library installed
-- **Cuda miner**: Cuda-Capable Nvidia Graphics Card and Nvidia Toolkit installed
+- **Cuda miner**: Cuda-Capable Nvidia Graphics Card and Cuda Toolkit installed
 
 # Systems
 - DNS Server for initial node connection and node retrieval (make dns_server)

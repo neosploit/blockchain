@@ -19,27 +19,35 @@ A mainly educational blockchain project in C
 - Basic Single-Core/Threaded miner (make miner)
 - Multi-Threaded OpenMP miner (make omp_miner)
 - CUDA-accelerated miner (make cuda_miner)
-- Web-Site Explorer (explorer folder)
+- Console-based Blockchain Explorer (make explorer)
+- Web-Site Blockchain Explorer (explorer folder)
 
 # Screenshots
 
 ## DNS Server
-![alt text](https://i.ibb.co/GQYzpcZ/dns-server.png)
+![dns server](https://i.ibb.co/GQYzpcZ/dns-server.png)
 
 ## Client
-![alt text](https://i.ibb.co/86mprwJ/client.png)
+![client](https://i.ibb.co/86mprwJ/client.png)
 
 ## Miner
-![alt text](https://i.ibb.co/MRnB8Bk/miner.png)
+![miner](https://i.ibb.co/MRnB8Bk/miner.png)
 
 ## OpenMP Miner
-![alt text](https://i.ibb.co/4JppYrR/omp-miner.png)
+![openmp miner](https://i.ibb.co/4JppYrR/omp-miner.png)
 
 ## Cuda Miner
-![alt text](https://i.ibb.co/BstZNqy/cuda-miner.png)
+![cuda miner](https://i.ibb.co/BstZNqy/cuda-miner.png)
 
 ## Console Wallet
-![alt text](https://i.ibb.co/ZzX5JXp/wallet.gif)
+![console wallet](https://i.ibb.co/ZzX5JXp/wallet.gif)
 
 ## GUI Wallet
-![alt text](https://i.ibb.co/0jH8NKF/wallet-gui.gif)
+![gui wallet](https://i.ibb.co/0jH8NKF/wallet-gui.gif)
+
+## Console Explorer
+![console explorer](https://i.ibb.co/59VRgVD/explorer-console.gif)
+
+## Web-Site Explorer
+![website explorer](https://i.ibb.co/SmQ2yz9/explorer-web.gif)
+

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ulfius.h>
+#include "../../include/auxilary.h"
+#include "../../include/json.h"
 #include "../../include/client/client.h"
-#include "../../include/client/auxilary.h"
-#include "../../include/client/json.h"
 #include "../../include/client/endpoints.h"
 
 void get_blockchain_sender_transactions(char *address){
@@ -15,10 +15,8 @@ void get_blockchain_sender_transactions(char *address){
 	json_error_t json_error;
 	size_t index;
 	json_t *block_json;
-	client_settings_t client_settings;
-	client_settings.request_timeout=100;
-	res = send_http_request(&client_settings, &request, &response, CLIENT_DEFAULT_IP_ADDRESS, 55000,
-    ENDPOINT_BLOCKCHAIN_RETRIEVE_HTTP_METHOD, ENDPOINT_BLOCKCHAIN_RETRIEVE_URL_PATH, NULL);
+	res = send_http_request(&request, &response, CLIENT_DEFAULT_IP_ADDRESS, 55000,
+    ENDPOINT_BLOCKCHAIN_RETRIEVE_HTTP_METHOD, ENDPOINT_BLOCKCHAIN_RETRIEVE_URL_PATH, NULL, 100);
     if(res == U_OK && response.status == 200){
         if (!(blockchain = ulfius_get_json_body_response(&response, &json_error))){
             fprintf(stderr, "\n[ERROR] get_blockchain_sender_transactions/ulfius_get_json_body_response (%s): %s\n", request.http_url, json_error.text);
@@ -47,11 +45,9 @@ void get_blockchain_receiver_transactions(char *address){
 	json_error_t json_error;
 	size_t index;
 	json_t *block_json;
-	client_settings_t client_settings;
-	client_settings.request_timeout=100;
 
-	res = send_http_request(&client_settings, &request, &response, CLIENT_DEFAULT_IP_ADDRESS, 55000,
-    ENDPOINT_BLOCKCHAIN_RETRIEVE_HTTP_METHOD, ENDPOINT_BLOCKCHAIN_RETRIEVE_URL_PATH, NULL);
+	res = send_http_request(&request, &response, CLIENT_DEFAULT_IP_ADDRESS, 55000,
+    ENDPOINT_BLOCKCHAIN_RETRIEVE_HTTP_METHOD, ENDPOINT_BLOCKCHAIN_RETRIEVE_URL_PATH, NULL, 100);
 // retrieve blockchain from response
     if(res == U_OK && response.status == 200){
         if (!(blockchain = ulfius_get_json_body_response(&response, &json_error))){
@@ -81,10 +77,8 @@ void get_block_id(int block_id){
 	json_error_t json_error;
 	size_t index;
 	json_t *block_json;
-	client_settings_t client_settings;
-	client_settings.request_timeout=100;
-	res = send_http_request(&client_settings, &request, &response, CLIENT_DEFAULT_IP_ADDRESS, 55000,
-    ENDPOINT_BLOCKCHAIN_RETRIEVE_HTTP_METHOD, ENDPOINT_BLOCKCHAIN_RETRIEVE_URL_PATH, NULL);
+	res = send_http_request(&request, &response, CLIENT_DEFAULT_IP_ADDRESS, 55000,
+    ENDPOINT_BLOCKCHAIN_RETRIEVE_HTTP_METHOD, ENDPOINT_BLOCKCHAIN_RETRIEVE_URL_PATH, NULL, 100);
 
 	// If the response is valid, retrieve the JSON node array from response's body
 	if(res == U_OK && response.status == 200){

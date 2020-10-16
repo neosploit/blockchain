@@ -16,7 +16,7 @@ BIN_DIR = bin
 
 ARGPARSE = $(LIB_DIR)/argparse/argparse.c
 
-all: dns_server client wallet wallet_gui miner omp_miner cuda_miner
+all: dns_server client wallet wallet_gui miner omp_miner cuda_miner explorer
 
 basic: dns_server client wallet miner
 
@@ -47,6 +47,10 @@ omp_miner: $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/omp_miner/*.c) $(wil
 cuda_miner: $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/cuda_miner/*.c*) $(wildcard $(SRC_DIR)/miner/*.c) $(wildcard $(SRC_DIR)/hashing/*.c)
 	$(MKDIR_P) $(BIN_DIR)
 	$(NVCC) -I $(INC_DIR)/$@ -o $(BIN_DIR)/$@ $^ $(ARGPARSE) $(LDFLAGS)
+	
+explorer: $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/arelka/*.c)
+	$(MKDIR_P) $(BIN_DIR)
+	$(CC) $(CFLAGS) -I $(INC_DIR)/$@ -o $(BIN_DIR)/$@ $^ $(LDFLAGS)
 
 clean:
 	$(RM) $(BIN_DIR)/*

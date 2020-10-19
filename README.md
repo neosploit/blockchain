@@ -10,6 +10,7 @@ A mainly educational blockchain project in C
 - **GUI Wallet**: X11, OpenGL and GLUT libraries installed
 - **OpenMP miner**: OpenMP Library installed
 - **Cuda miner**: Cuda-Capable Nvidia Graphics Card and Cuda Toolkit installed
+- **Explorer Website**: Apache HTTP Server to run Explorer from (XAMPP, LAMP etc.)
 
 # Systems
 - DNS Server for initial node connection and node retrieval (make dns_server)
@@ -20,7 +21,7 @@ A mainly educational blockchain project in C
 - Multi-Threaded OpenMP miner (make omp_miner)
 - CUDA-accelerated miner (make cuda_miner)
 - Console-based Blockchain Explorer (make explorer)
-- Web-Site Blockchain Explorer (explorer folder)
+- Website Blockchain Explorer (explorer folder)
 
 # Screenshots
 
@@ -48,6 +49,6 @@ A mainly educational blockchain project in C
 ## Console Explorer
 ![console explorer](https://i.ibb.co/59VRgVD/explorer-console.gif)
 
-## Web-Site Explorer
+## Website Explorer
 ![website explorer](https://i.ibb.co/SmQ2yz9/explorer-web.gif)
 

@@ -6,8 +6,7 @@
 #include "json.h"
 #include "../include/client/endpoints.h"
 
-#define NONCE_LENGTH 8
-#define DIFFICULTY 8    // number of zeros in front of hash
+#define DIFFICULTY 8    // number of hexadecimal zeros in front of hash
 
 // Default settings
 #define MINER_DEFAULT_IP_ADDRESS           "127.0.0.1"
@@ -44,14 +43,10 @@ typedef struct miner_settings_t {
 
 // hashing
 char *calculate_transaction_hash(transaction_t transaction);
-int **calculate_transaction_hashes(transaction_t *transactions, int transaction_count);
-int *calculate_transaction_hashes_1D(transaction_t *transactions, int transaction_count);
-char *calculate_block_hash(block_t block, int **transaction_hashes, unsigned int nonce);
+unsigned int **calculate_transaction_hashes(transaction_t *transactions, int transaction_count);
+unsigned int *calculate_transaction_hashes_1D(transaction_t *transactions, int transaction_count);
+char *calculate_block_hash(block_t block, unsigned int **transaction_hashes, unsigned int nonce);
 bool hash_ok(char *hash, int difficulty);
-
-// nonce functions
-unsigned int *nonce_split(unsigned int nonce);
-unsigned int nonce_combine(unsigned int *nonce_splitted);
 
 // stats
 time_t start_time;

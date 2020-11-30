@@ -121,12 +121,12 @@ bool json_transaction_is_valid(const json_t *json_transaction) {
     // 2: Sender
     if (!json_object_get(json_transaction, "sender")) return false;
     if (!json_is_string(json_object_get(json_transaction, "sender"))) return false;
-    if (!(strlen(json_string_value(json_object_get(json_transaction, "sender"))) == HASH_LENGTH)) return false;
+    if (!(strlen(json_string_value(json_object_get(json_transaction, "sender"))) == HEX_LENGTH)) return false;
 
     // 3: Receiver
     if (!json_object_get(json_transaction, "receiver")) return false;
     if (!json_is_string(json_object_get(json_transaction, "receiver"))) return false;
-    if (!(strlen(json_string_value(json_object_get(json_transaction, "receiver")))== HASH_LENGTH)) return false;
+    if (!(strlen(json_string_value(json_object_get(json_transaction, "receiver")))== HEX_LENGTH)) return false;
 
     // 4: Amount
     if (!json_object_get(json_transaction, "amount")) return false;
@@ -262,12 +262,12 @@ bool json_block_is_valid(const json_t *json_block) {
     // 6: Previous
     if (!json_object_get(json_block, "previous")) return false;
     if (!json_is_string(json_object_get(json_block, "previous"))) return false;
-    if (!(strlen(json_string_value(json_object_get(json_block, "previous"))) == HASH_LENGTH)) return false;
+    if (!(strlen(json_string_value(json_object_get(json_block, "previous"))) == HEX_LENGTH)) return false;
 
     // 7: Hash
     if (!json_object_get(json_block, "hash")) return false;
     if (!json_is_string(json_object_get(json_block, "hash"))) return false;
-    if (!(strlen(json_string_value(json_object_get(json_block, "hash"))) == HASH_LENGTH)) return false;
+    if (!(strlen(json_string_value(json_object_get(json_block, "hash"))) == HEX_LENGTH)) return false;
 
     return true;
 }

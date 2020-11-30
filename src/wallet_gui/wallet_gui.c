@@ -257,7 +257,7 @@ int start_gui(client_settings_t *client)
     wallet_balances = (char**) malloc(MAX_WALLET_COUNT * sizeof(char*));
     for(int i = 0; i < MAX_WALLET_COUNT; i++)
     {
-        wallet_addresses[i] = (char*) malloc((HASH_LENGTH + 1) * sizeof(char));
+        wallet_addresses[i] = (char*) malloc((HEX_LENGTH + 1) * sizeof(char));
         wallet_balances[i] = (char*) malloc(50 * sizeof(char));
     }
     _wallet_addresses = wallet_addresses;
@@ -277,8 +277,8 @@ int start_gui(client_settings_t *client)
     transaction_time = (char**) malloc(MAX_TRANSACTION_DISPLAY_COUNT * sizeof(char*));
     for(int i = 0; i < MAX_TRANSACTION_DISPLAY_COUNT; i++)
     {
-        transaction_sender[i] = (char*) malloc((HASH_LENGTH + 1) * sizeof(char));
-        transaction_receiver[i] = (char*) malloc((HASH_LENGTH + 1) * sizeof(char));
+        transaction_sender[i] = (char*) malloc((HEX_LENGTH + 1) * sizeof(char));
+        transaction_receiver[i] = (char*) malloc((HEX_LENGTH + 1) * sizeof(char));
         transaction_amount[i] = (char*) malloc(12 * sizeof(char));
         transaction_time[i] = (char*) malloc(30 * sizeof(char));
     }

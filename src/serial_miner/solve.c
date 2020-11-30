@@ -8,7 +8,7 @@
 int brute_force_solve_block(block_t *block){
     unsigned int nonce;
     char *hash;
-    int **transaction_hashes;
+    unsigned int **transaction_hashes;
     int i;    
 
     unsigned int nonce_solution;
@@ -30,7 +30,7 @@ int brute_force_solve_block(block_t *block){
     nonce = 0;
     hash = NULL;
     nonce_solution = 0;
-    hash_solution = (char*) malloc((HASH_LENGTH + 1) * sizeof(char));
+    hash_solution = (char*) malloc((HEX_LENGTH + 1) * sizeof(char));
     nonce_prev = 0;
 
     // serial solve
@@ -38,7 +38,7 @@ int brute_force_solve_block(block_t *block){
         hash = calculate_block_hash(*block, transaction_hashes, nonce);
     
         if(hash_ok(hash, DIFFICULTY)){
-            strncpy(hash_solution, hash, HASH_LENGTH + 1);
+            strncpy(hash_solution, hash, HEX_LENGTH + 1);
             nonce_solution = nonce;
             printf(GRN "Found Nonce Solution: %u, Block Hash: %s!\n" RESET, nonce_solution, hash_solution);
             break;            

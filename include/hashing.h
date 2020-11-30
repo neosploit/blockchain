@@ -1,15 +1,12 @@
 #ifndef HASHING_H
 #define HASHING_H
 
-#define HASH_LENGTH 32
-#define GROUP_LENGTH 2
-
-// modulo functions
-int modulo(long int value);
-int modulo_add(long int valueX, long int valueY);
+#define BIT_LENGTH 256
+#define HEX_LENGTH ((int) (BIT_LENGTH / 4))
+#define HEX_GROUP  ((int) sizeof(unsigned int) * 2)
 
 // conversion functions
-int* hash_to_int_array(const char *hash_string);
-char* int_array_to_hash(int *hash);
+unsigned int* hash_to_int_array(const char *hash_string);
+char* int_array_to_hash(unsigned int *hash);
 
 #endif // HASHING_H

@@ -10,7 +10,7 @@ transaction_t* prepare_transaction(client_settings_t client){
     size_t index;
     size_t choice;
     transaction_t *transaction;
-    char buf[HASH_LENGTH + 1];
+    char buf[HEX_LENGTH + 1];
     double amount;
     char *sender;
     char *receiver;
@@ -30,10 +30,10 @@ transaction_t* prepare_transaction(client_settings_t client){
 
     // allocate memory
     transaction = (transaction_t *) malloc(sizeof(transaction_t));
-    sender = (char*) malloc((HASH_LENGTH + 1) * sizeof(char));
-    receiver = (char*) malloc((HASH_LENGTH + 1) * sizeof(char));
+    sender = (char*) malloc((HEX_LENGTH + 1) * sizeof(char));
+    receiver = (char*) malloc((HEX_LENGTH + 1) * sizeof(char));
 
-    snprintf(sender, HASH_LENGTH + 1, "%s", json_destruct_wallet(json_array_get(wallets, choice)).address);
+    snprintf(sender, HEX_LENGTH + 1, "%s", json_destruct_wallet(json_array_get(wallets, choice)).address);
 
     transaction->sender = sender;
 
@@ -43,7 +43,7 @@ transaction_t* prepare_transaction(client_settings_t client){
         scanf("%s", buf);
     }while(!address_is_valid(buf));
     
-    snprintf(receiver, HASH_LENGTH + 1, "%s", buf);
+    snprintf(receiver, HEX_LENGTH + 1, "%s", buf);
     transaction->receiver = receiver;
 
     // send amount

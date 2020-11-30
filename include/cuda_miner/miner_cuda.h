@@ -3,6 +3,6 @@
 
 #define NUM_BLOCKS 224
 #define NUM_THREADS 256
-#define RANGE_PARTS 32
+#define RANGE_PARTS 256
 
 #endif // MINER_CUDA_H

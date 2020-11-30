@@ -203,7 +203,7 @@ int hash_of_word(char *word){
 
     hash = 0;
     for(i = 0; i < strlen(word); i++){
-        hash = modulo(hash ^ word[i]);
+        hash = hash ^ word[i];
     }
 
     return hash;
@@ -211,13 +211,13 @@ int hash_of_word(char *word){
 
 bool address_is_valid(char *address){
     // check length
-    if(strlen(address) != HASH_LENGTH)
+    if(strlen(address) != HEX_LENGTH)
     {
         return false;
     }
 
     // check characters
-    for(int i = 0; i < HASH_LENGTH; i++){
+    for(int i = 0; i < HEX_LENGTH; i++){
         if((!(address[i] >= '0' && address[i] <= '9')) && (!(address[i] >= 'a' && address[i] <= 'f'))){
             return false;
         }
@@ -228,15 +228,15 @@ bool address_is_valid(char *address){
 
 char* generate_private_key(char **seed_phrase){
     char *private_key;
-    int *key;
+    unsigned int *key;
     int i, j;
     
     // calculate private key
-    key = (int*) calloc((HASH_LENGTH / GROUP_LENGTH), sizeof(int));
+    key = (unsigned int*) calloc((HEX_LENGTH / HEX_GROUP), sizeof(unsigned int));
 
     for(i = 0; i < SEED_PHRASE_LENGTH; i++){
-        for(j = (i * HASH_LENGTH / GROUP_LENGTH) / SEED_PHRASE_LENGTH; j < HASH_LENGTH / GROUP_LENGTH; j++){
-            key[j] = modulo_add(1, key[j] ^ hash_of_word(seed_phrase[i]));
+        for(j = (i * HEX_LENGTH / HEX_GROUP) / SEED_PHRASE_LENGTH; j < HEX_LENGTH / HEX_GROUP; j++){
+            key[j] = 1 ^ (key[j] ^ hash_of_word(seed_phrase[i]));
         }
     }
     
@@ -251,18 +251,18 @@ char* generate_private_key(char **seed_phrase){
 
 char* generate_public_key(const char *private_key){
     char *public_key;
-    int *key;
+    unsigned int *key;
     int i;
-    int *private_key_hash;
+    unsigned int *private_key_hash;
 
     private_key_hash = hash_to_int_array(private_key);
 
     // calculate public key
-    key = (int*) calloc(HASH_LENGTH / GROUP_LENGTH, sizeof(int));
+    key = (unsigned int*) calloc(HEX_LENGTH / HEX_GROUP, sizeof(unsigned int));
 
-    key[0] = modulo_add(1, private_key[0] + private_key[0]);
-    for(i = 1; i < HASH_LENGTH / GROUP_LENGTH; i++){
-        key[i] = modulo_add(1, private_key[i] * key[i-1]);
+    key[0] = 1 ^ (private_key[0] + private_key[0]);
+    for(i = 1; i < HEX_LENGTH / HEX_GROUP; i++){
+        key[i] = 1 ^ (private_key[i] * key[i-1]);
     }
 
     // store as character array
@@ -277,18 +277,18 @@ char* generate_public_key(const char *private_key){
 
 char* generate_address(const char *public_key){
     char *address;
-    int *calc;
+    unsigned int *calc;
     int i;
-    int *public_key_hash;
+    unsigned int *public_key_hash;
 
     public_key_hash = hash_to_int_array(public_key);
 
     // calculate address
-    calc = (int*) calloc(HASH_LENGTH/GROUP_LENGTH, sizeof(int));
+    calc = (unsigned int*) calloc(HEX_LENGTH/HEX_GROUP, sizeof(unsigned int));
 
-    calc[0] = modulo(public_key_hash[0]*public_key_hash[0]);
-    for(i = 1; i < HASH_LENGTH/GROUP_LENGTH; i++){
-        calc[i] = modulo(calc[i-1] ^ public_key_hash[i]);
+    calc[0] = public_key_hash[0]*public_key_hash[0];
+    for(i = 1; i < HEX_LENGTH/HEX_GROUP; i++){
+        calc[i] = calc[i-1] ^ public_key_hash[i];
     }
 
     // store as character array 
